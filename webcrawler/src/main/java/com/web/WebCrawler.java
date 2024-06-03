@@ -57,8 +57,13 @@ public class WebCrawler implements LinkHandler {
      * Adds to the visited movies list
      */
     @Override
-    public void addVisited(String idPelicula) {
-        visitedActors.add(idPelicula);
+    public void addVisitedMovie(String idMovie) {
+        visitedActors.add(idMovie);
+    }
+
+    @Override
+    public void addVisitedActor(String idActor) {
+        visitedActors.add(idActor);
     }
 
     /**
@@ -67,7 +72,12 @@ public class WebCrawler implements LinkHandler {
      * False: Has NOT been visited
      */
     @Override
-    public boolean visited(String idPelicula) {
+    public boolean visitedMovie(String idPelicula) {
         return visitedActors.contains(idPelicula);
+    }
+
+    @Override
+    public boolean visitedActor(String idActor) {
+        return visitedActors.contains(idActor);
     }
 }

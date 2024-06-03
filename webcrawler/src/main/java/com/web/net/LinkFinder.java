@@ -57,6 +57,11 @@ public class LinkFinder implements Runnable {
             Document document = Jsoup.connect(url).get();
             System.out.println("Conectado a: " + url);
 
+            // know if is a movie or an actor
+            if (url.contains("name")) {
+                extractMoviesFromActor(url);
+            }
+
             //? Get the movie title
             Element titleElement = document.selectFirst(TITLE_SELECTOR);
             String title = titleElement != null ? titleElement.text() : "No encontrado"; // no tiene mucho sentido, talvez estaria bien poner un return en vez de un "No encontrado"
@@ -78,10 +83,11 @@ public class LinkFinder implements Runnable {
             
             StringBuilder actorNames = new StringBuilder();
             ArrayList<String> actorLinks = new ArrayList<>();
+            //! Actor actor = new Actor(title, actorNames.toString(), actorLinks); 
             
             // recorrer cada uno de los actores y guardar su nombre y link
             for (Element actorElement : actorElements) {
-                
+
                 String actorHref = actorElement.attr("href");
                 actorNames.append(actorElement.text()).append(", ");
                 actorLinks.add(BASE_URL + actorHref);
@@ -127,7 +133,7 @@ public class LinkFinder implements Runnable {
                 String movieUrl = BASE_URL + movieHref;
 
                 // agregar la pelicula a la cola de links
-                linkHandler.queueMovie(movieUrl);
+                linkHandler.queue(movieUrl);
             }
         } catch (Exception e) {
         }

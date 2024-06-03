@@ -7,8 +7,7 @@ public interface LinkHandler {
      * @param link
      * @throws Exception
      */
-    void queueMovie(String link) throws Exception;
-    void queueActor(String link) throws Exception;
+    void queue(String link) throws Exception;
 
     /**
      * Returns the number of links that have been visited
