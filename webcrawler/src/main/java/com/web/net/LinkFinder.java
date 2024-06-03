@@ -48,7 +48,7 @@ public class LinkFinder implements Runnable {
     }
 
     /**
-     * Extraer los links de la pagina
+     * Extraer los links de la pagina de la pelicula
      * @param url
      */
     private void getSimpleLinks(String url) {
@@ -61,8 +61,8 @@ public class LinkFinder implements Runnable {
             Element titleElement = document.selectFirst(TITLE_SELECTOR);
             String title = titleElement != null ? titleElement.text() : "No encontrado"; // no tiene mucho sentido, talvez estaria bien poner un return en vez de un "No encontrado"
 
-            // si ya se visito la pagina, no hacer nada
-            if (linkHandler.visited(title)) //&& !title.equals("No encontrado"))
+            // si ya se visito la pagina de la pelicula, no hacer nada
+            if (linkHandler.visitedMovie(title)) //&& !title.equals("No encontrado"))
                 return;
 
             //? extraer los datos de la pelicula
@@ -80,6 +80,7 @@ public class LinkFinder implements Runnable {
             
             // recorrer cada uno de los actores y guardar su nombre y link
             for (Element actorElement : actorElements) {
+                
                 String actorHref = actorElement.attr("href");
                 actorNames.append(actorElement.text()).append(", ");
                 actorLinks.add(BASE_URL + actorHref);
@@ -88,7 +89,7 @@ public class LinkFinder implements Runnable {
             if (actorNames.length() > 0)
                 actorNames.setLength(actorNames.length() - 2); // ? Quita la coma del final del string de actores
             
-            linkHandler.addVisited(title); // agregar el titulo a la lista de visitados
+            linkHandler.addVisitedMovie(title); // agregar el titulo a la lista de visitados
             
             // TODO: talvez sea mejor hacer un objeto que imprima las cosas, de 
             // igual forma, que nos permita de una vez guardar los datos en un csv
@@ -116,7 +117,7 @@ public class LinkFinder implements Runnable {
     private void extractMoviesFromActor(String actorUrl) {
         try {
             Document document = Jsoup.connect(actorUrl).get();
-            Elements movieElements = document.select(MOVIE_SELECTOR);
+            Elements movieElements = document.select(MOVIE_SELECTOR); // agarra las peliculas 
 
             // recorrer cada una de las peliculas y guardar su link
             for (Element movieElement : movieElements) {
@@ -125,7 +126,7 @@ public class LinkFinder implements Runnable {
                 String movieUrl = BASE_URL + movieHref;
 
                 // agregar la pelicula a la cola de links
-                linkHandler.queueLink(movieUrl);
+                linkHandler.queueMovie(movieUrl);
             }
         } catch (Exception e) {
         }

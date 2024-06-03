@@ -10,11 +10,11 @@ import java.util.concurrent.Executors;
 import java.net.URL;
 
 public class WebCrawler implements LinkHandler {
-    private final Collection<String> visitedMovies = Collections.synchronizedSet(new HashSet<String>());
-    private final Collection<String> visitedActors = Collections.synchronizedSet(new HashSet<String>());
+    private final Collection<String> visitedMovies = Collections.synchronizedSet(new HashSet<String>()); // Lista de peliculas visitadas (por id)
+    private final Collection<String> visitedActors = Collections.synchronizedSet(new HashSet<String>()); // Lista de actores visitados (por id)
     
     private String url; // Link (URL) inicial del programa
-    private ExecutorService executorService; // executor que se enccarga de admi
+    private ExecutorService executorService; // executor que se enccarga de administrar los Threads
 
     public WebCrawler(String startingURL, int maxThreads) {
         this.url = startingURL;
@@ -25,7 +25,7 @@ public class WebCrawler implements LinkHandler {
      * Agrega un link a la queue
      */
     @Override
-    public void queueLink(String link) throws Exception {
+    public void queue(String link) throws Exception {
         startNewThread(link);
     }
 
@@ -46,7 +46,7 @@ public class WebCrawler implements LinkHandler {
     }
 
     /**
-     * Devuelve el tamano de 
+     * Devuelve el tamano de la lista (realmente no se usa)
      */
     @Override
     public int size() {
@@ -57,8 +57,8 @@ public class WebCrawler implements LinkHandler {
      * Agregar a la lista de cosas visitadas
      */
     @Override
-    public void addVisited(String s) {
-        visitedActors.add(s);
+    public void addVisited(String idPelicula) {
+        visitedActors.add(idPelicula);
     }
 
     /**
@@ -67,7 +67,7 @@ public class WebCrawler implements LinkHandler {
      * Falsa: No ha sido visitada
      */
     @Override
-    public boolean visited(String link) {
-        return visitedActors.contains(link);
+    public boolean visited(String idPelicula) {
+        return visitedActors.contains(idPelicula);
     }
 }
