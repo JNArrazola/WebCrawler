@@ -3,7 +3,7 @@ package com.web;
 public interface LinkHandler {
 
     /**
-     * Guarda el link en la cosa
+     * Stores the link of the movie or actor to be visited
      * @param link
      * @throws Exception
      */
@@ -11,13 +11,13 @@ public interface LinkHandler {
     void queueActor(String link) throws Exception;
 
     /**
-     * Retorna el número de links visitados
+     * Returns the number of links that have been visited
      * @return
      */
     int size();
 
     /**
-     * Verifica si el link ya ha sido visitado
+     * Verifies if the link has been visited
      * @param link
      * @return
      */
@@ -25,7 +25,7 @@ public interface LinkHandler {
     boolean visitedActor(String link);
 
     /**
-     * Marca el link como visitado
+     * Marks the link as visited
      * @param link
      */
     void addVisitedMovie(String link);

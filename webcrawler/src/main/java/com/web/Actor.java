@@ -6,7 +6,7 @@ import java.util.List;
  * Actor: 
  * ID
  * name, 
- * movies (Array de Objetos Movie)
+ * movies (Array of Movie objects)
  */
 public class Actor {
     private String id;
@@ -14,7 +14,7 @@ public class Actor {
     private List<Movie> movies;
 
     /**
-     * Constructor de la clase Actor
+     * Constructor of the actor class
      * @param id
      * @param name
      * @param movies

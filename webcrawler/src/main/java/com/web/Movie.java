@@ -2,7 +2,7 @@ package com.web;
 
 import java.util.List;
 /**
- * Esta clase debera de guardar lo siguiente:
+ * This class will store the following things:
  * ID
  * title, 
  * rating, 
@@ -17,7 +17,7 @@ public class Movie {
     private List<Actor> actors;
 
     /**
-     * Constructor de la clase Movie
+     * Constructor of the movie class
      * @param id
      * @param title
      * @param rating

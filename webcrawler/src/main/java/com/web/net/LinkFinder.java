@@ -13,16 +13,16 @@ import org.jsoup.select.Elements;
 
 // TODO: manejar las cosas con ID en vez de nombre
 public class LinkFinder implements Runnable {
-    // Dominio de la página
+    // webpage domain
     private static final String BASE_URL = "https://www.imdb.com/"; 
 
-    // Esto es de la pagina de la pelicula
+    // This is related to the movie page
     private static final String TITLE_SELECTOR = "[data-testid=\"hero__primary-text\"]"; // Título de la película en html de la pagina
     private static final String RATING_SELECTOR = "[data-testid=\"hero-rating-bar__aggregate-rating__score\"]"; // Rating de la película en el html
     private static final String SYNOPSIS_SELECTOR = "[data-testid=plot-xl]"; // Sinopsis de la película en el html
     private static final String ACTOR_SELECTOR = "[data-testid=\"title-cast-item__actor\"]"; // Actores en el html
     
-    // Esto es de la pagina de los actores
+    // This is related to the actor page
     private static final String MOVIE_SELECTOR = ".ipc-primary-image-list-card__title"; // Pelpiculas de autores
 
     //   
@@ -30,7 +30,7 @@ public class LinkFinder implements Runnable {
     private final LinkHandler linkHandler;
 
     /**
-     * Constructor de la clase LinkFinder
+     * Constructor of the LinkFinder class
      * @param url
      * @param handler
      */
@@ -40,7 +40,7 @@ public class LinkFinder implements Runnable {
     }
 
     /**
-     * Correr el proceso de crawling
+     * Run the crawling process
      */
     @Override
     public void run() {
@@ -48,31 +48,32 @@ public class LinkFinder implements Runnable {
     }
 
     /**
-     * Extraer los links de la pagina de la pelicula
+     * Extract links of the movie page
      * @param url
      */
     private void getSimpleLinks(String url) {
         try {
-            //? obtener el documento de la pagina (el html)
+            //? Obtain the parsed DOM (HTML document)
             Document document = Jsoup.connect(url).get();
             System.out.println("Conectado a: " + url);
 
-            //? extraer el titulo de la pelicula
+            //? Get the movie title
             Element titleElement = document.selectFirst(TITLE_SELECTOR);
             String title = titleElement != null ? titleElement.text() : "No encontrado"; // no tiene mucho sentido, talvez estaria bien poner un return en vez de un "No encontrado"
 
-            // si ya se visito la pagina de la pelicula, no hacer nada
-            if (linkHandler.visitedMovie(title)) //&& !title.equals("No encontrado"))
+            //! If the movie has been visited, return
+            if (linkHandler.visitedMovie(title))
                 return;
 
-            //? extraer los datos de la pelicula
+            //? Extract the rating of the movie
             Element ratingElement = document.selectFirst(RATING_SELECTOR);
             String rating = ratingElement != null ? ratingElement.text() : "No existe Rating"; 
             
+            //? Extract the synopsis of the movie
             Element synopsisElement = document.selectFirst(SYNOPSIS_SELECTOR);
             String synopsis = synopsisElement != null ? synopsisElement.text() : "No existe Sinopsis";
             
-            //? extraer los actores de la pelicula
+            //? Extract the actors of the movie
             Elements actorElements = document.select(ACTOR_SELECTOR);
             
             StringBuilder actorNames = new StringBuilder();

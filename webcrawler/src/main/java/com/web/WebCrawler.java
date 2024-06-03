@@ -13,8 +13,8 @@ public class WebCrawler implements LinkHandler {
     private final Collection<String> visitedMovies = Collections.synchronizedSet(new HashSet<String>()); // Lista de peliculas visitadas (por id)
     private final Collection<String> visitedActors = Collections.synchronizedSet(new HashSet<String>()); // Lista de actores visitados (por id)
     
-    private String url; // Link (URL) inicial del programa
-    private ExecutorService executorService; // executor que se enccarga de administrar los Threads
+    private String url; // Initial link to start crawling
+    private ExecutorService executorService; // Executor service to manage threads
 
     public WebCrawler(String startingURL, int maxThreads) {
         this.url = startingURL;
@@ -22,7 +22,7 @@ public class WebCrawler implements LinkHandler {
     }
 
     /**
-     * Agrega un link a la queue
+     * Adds a link to queue
      */
     @Override
     public void queue(String link) throws Exception {
@@ -30,7 +30,7 @@ public class WebCrawler implements LinkHandler {
     }
 
     /**
-     * Agregar procesos a la cola de threads
+     * Adds new processes to the executor
      * @param link
      * @throws Exception
      */
@@ -39,14 +39,14 @@ public class WebCrawler implements LinkHandler {
     }
 
     /**
-     * Inicia el proceso de crawling
+     * Starts the crawling process
      */
     public void startCrawling() throws Exception {
         startNewThread(this.url);
     }
 
     /**
-     * Devuelve el tamano de la lista (realmente no se usa)
+     * Returns the size of the visited movies list
      */
     @Override
     public int size() {
@@ -54,7 +54,7 @@ public class WebCrawler implements LinkHandler {
     }
 
     /**
-     * Agregar a la lista de cosas visitadas
+     * Adds to the visited movies list
      */
     @Override
     public void addVisited(String idPelicula) {
@@ -62,9 +62,9 @@ public class WebCrawler implements LinkHandler {
     }
 
     /**
-     * Retorno un booleano que dice si la pelicula ya fue visitada
-     * True: Ya fue visitada
-     * Falsa: No ha sido visitada
+     * Returns a boolean value if the movie has been visited
+     * True: Has been visited
+     * False: Has NOT been visited
      */
     @Override
     public boolean visited(String idPelicula) {
