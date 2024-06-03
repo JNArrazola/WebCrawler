@@ -9,12 +9,12 @@ import org.jsoup.select.Elements;
 
 public class LinkFinder implements Runnable {
 
-    private static final String BASE_URL = "https://www.imdb.com/";
-    private static final String TITLE_SELECTOR = "[data-testid=\"hero__primary-text\"]";
-    private static final String RATING_SELECTOR = "[data-testid=\"hero-rating-bar__aggregate-rating__score\"]";
-    private static final String SYNOPSIS_SELECTOR = "[data-testid=plot-xl]";
-    private static final String ACTOR_SELECTOR = "[data-testid=\"title-cast-item__actor\"]";
-    private static final String MOVIE_SELECTOR = ".ipc-primary-image-list-card__title";
+    private static final String BASE_URL = "https://www.imdb.com/"; // Dominio de la página
+    private static final String TITLE_SELECTOR = "[data-testid=\"hero__primary-text\"]"; // Título de la película
+    private static final String RATING_SELECTOR = "[data-testid=\"hero-rating-bar__aggregate-rating__score\"]"; // Rating de la película
+    private static final String SYNOPSIS_SELECTOR = "[data-testid=plot-xl]"; // Sinopsis de la película
+    private static final String ACTOR_SELECTOR = "[data-testid=\"title-cast-item__actor\"]"; // Actores 
+    private static final String MOVIE_SELECTOR = ".ipc-primary-image-list-card__title"; // Pelpiculas de autores
 
     private final String url;
     private final LinkHandler linkHandler;
@@ -36,31 +36,30 @@ public class LinkFinder implements Runnable {
             Element titleElement = document.selectFirst(TITLE_SELECTOR);
             String title = titleElement != null ? titleElement.text() : "No encontrado";
 
-            if (!linkHandler.visited(title) && !title.equals("No encontrado"))
-                linkHandler.addVisited(title);
-            else
+            if (linkHandler.visited(title) && !title.equals("No encontrado"))
                 return;
 
             Element ratingElement = document.selectFirst(RATING_SELECTOR);
             String rating = ratingElement != null ? ratingElement.text() : "No encontrado";
-
+            
             Element synopsisElement = document.selectFirst(SYNOPSIS_SELECTOR);
             String synopsis = synopsisElement != null ? synopsisElement.text() : "No encontrado";
-
+            
             Elements actorElements = document.select(ACTOR_SELECTOR);
-
+            
             StringBuilder actorNames = new StringBuilder();
             ArrayList<String> actorLinks = new ArrayList<>();
-
+            
             for (Element actorElement : actorElements) {
                 String actorHref = actorElement.attr("href");
                 actorNames.append(actorElement.text()).append(", ");
                 actorLinks.add(BASE_URL + actorHref);
             }
-
+            
             if (actorNames.length() > 0)
-                actorNames.setLength(actorNames.length() - 2); // ? Quitar la coma final
-
+            actorNames.setLength(actorNames.length() - 2); // ? Quitar la coma final
+            
+            linkHandler.addVisited(title);
             System.out.println("Título: " + title + " - " + url);
             System.out.println("Calificación: " + rating);
             System.out.println("Sinopsis: " + synopsis);
