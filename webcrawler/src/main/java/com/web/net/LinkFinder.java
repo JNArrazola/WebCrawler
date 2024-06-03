@@ -7,8 +7,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class LinkFinder implements Runnable {
+// TODO: Agregar el identificador en vez del nombre para evitar nombres reptidos
+    // ex: https://www.imdb.com//title/tt15791034/?ref_=nm_knf_t_4
+    // id: tt15791034
 
+// TODO: manejar las cosas con ID en vez de nombre
+public class LinkFinder implements Runnable {
     // Dominio de la página
     private static final String BASE_URL = "https://www.imdb.com/"; 
 
@@ -21,38 +25,54 @@ public class LinkFinder implements Runnable {
     // Esto es de la pagina de los actores
     private static final String MOVIE_SELECTOR = ".ipc-primary-image-list-card__title"; // Pelpiculas de autores
 
+    //   
     private final String url;
     private final LinkHandler linkHandler;
 
+    /**
+     * Constructor de la clase LinkFinder
+     * @param url
+     * @param handler
+     */
     public LinkFinder(String url, LinkHandler handler) {
         this.url = url;
         this.linkHandler = handler;
     }
 
+    /**
+     * Correr el proceso de crawling
+     */
     @Override
     public void run() {
         getSimpleLinks(url);
     }
 
+    /**
+     * Extraer los links de la pagina
+     * @param url
+     */
     private void getSimpleLinks(String url) {
         try {
+            //? obtener el documento de la pagina (el html)
             Document document = Jsoup.connect(url).get();
+            System.out.println("Conectado a: " + url);
 
+            //? extraer el titulo de la pelicula
             Element titleElement = document.selectFirst(TITLE_SELECTOR);
-            String title = titleElement != null ? titleElement.text() : "No encontrado"; // no tiene mucho, talvez estaria bien poner un return en vez de un "No encontrado"
+            String title = titleElement != null ? titleElement.text() : "No encontrado"; // no tiene mucho sentido, talvez estaria bien poner un return en vez de un "No encontrado"
 
             // si ya se visito la pagina, no hacer nada
             if (linkHandler.visited(title)) //&& !title.equals("No encontrado"))
                 return;
 
-            // extraer los datos de la pelicula
+            //? extraer los datos de la pelicula
             Element ratingElement = document.selectFirst(RATING_SELECTOR);
             String rating = ratingElement != null ? ratingElement.text() : "No existe Rating"; 
             
             Element synopsisElement = document.selectFirst(SYNOPSIS_SELECTOR);
             String synopsis = synopsisElement != null ? synopsisElement.text() : "No existe Sinopsis";
             
-            // extraer los actores de la pelicula
+            //? extraer los actores de la pelicula
             Elements actorElements = document.select(ACTOR_SELECTOR);
             
             StringBuilder actorNames = new StringBuilder();

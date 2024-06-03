@@ -6,15 +6,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-// TODO: Agregar el identificador en vez del nombre para evitar nombres reptidos
-// ex: https://www.imdb.com//title/tt15791034/?ref_=nm_knf_t_4
-    // id: tt15791034
+// TODO: usar URL en vez de String para manejar los links
+import java.net.URL;
 
 public class WebCrawler implements LinkHandler {
-
-    // nombre de las peliculas visitadas
-    private final Collection<String> visitedNames = Collections.synchronizedSet(new HashSet<String>());
+    private final Collection<String> visitedMovies = Collections.synchronizedSet(new HashSet<String>());
+    private final Collection<String> visitedActors = Collections.synchronizedSet(new HashSet<String>());
     
     private String url; // Link (URL) inicial del programa
     private ExecutorService executorService; // executor que se enccarga de admi
@@ -53,7 +50,7 @@ public class WebCrawler implements LinkHandler {
      */
     @Override
     public int size() {
-        return visitedNames.size();
+        return visitedActors.size();
     }
 
     /**
@@ -61,7 +58,7 @@ public class WebCrawler implements LinkHandler {
      */
     @Override
     public void addVisited(String s) {
-        visitedNames.add(s);
+        visitedActors.add(s);
     }
 
     /**
@@ -71,6 +68,6 @@ public class WebCrawler implements LinkHandler {
      */
     @Override
     public boolean visited(String link) {
-        return visitedNames.contains(link);
+        return visitedActors.contains(link);
     }
 }
