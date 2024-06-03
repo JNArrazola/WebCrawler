@@ -41,15 +41,18 @@ public class LinkFinder implements Runnable {
             Element titleElement = document.selectFirst(TITLE_SELECTOR);
             String title = titleElement != null ? titleElement.text() : "No encontrado"; // no tiene mucho, talvez estaria bien poner un return en vez de un "No encontrado"
 
+            // si ya se visito la pagina, no hacer nada
             if (linkHandler.visited(title)) //&& !title.equals("No encontrado"))
                 return;
 
+            // extraer los datos de la pelicula
             Element ratingElement = document.selectFirst(RATING_SELECTOR);
             String rating = ratingElement != null ? ratingElement.text() : "No existe Rating"; 
             
             Element synopsisElement = document.selectFirst(SYNOPSIS_SELECTOR);
             String synopsis = synopsisElement != null ? synopsisElement.text() : "No existe Sinopsis";
             
+            // extraer los actores de la pelicula
             Elements actorElements = document.select(ACTOR_SELECTOR);
             
             StringBuilder actorNames = new StringBuilder();
