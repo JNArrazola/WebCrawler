@@ -1,0 +1,1 @@
+- [ ] Revisar si un hashset de actores aceleraría la búsqueda

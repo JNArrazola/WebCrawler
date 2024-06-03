@@ -9,8 +9,8 @@ import java.util.concurrent.Executors;
 
 public class WebCrawler implements LinkHandler {
 
-    private final Collection<String> visitedLinks = Collections.synchronizedSet(new HashSet<String>());
-    // private final Collection<String> visitedLinks = Collections.synchronizedList(new ArrayList<String>());
+    private final Collection<String> visitedNames = Collections.synchronizedSet(new HashSet<String>());
+    // private final Collection<String> visitedNames = Collections.synchronizedList(new ArrayList<String>());
     private String url;
     private ExecutorService executorService;
 
@@ -29,22 +29,21 @@ public class WebCrawler implements LinkHandler {
     }
 
     public void startCrawling() throws Exception {
-        //System.out.println("visitando: " + this.url);
         startNewThread(this.url);
     }
 
     @Override
     public int size() {
-        return visitedLinks.size();
+        return visitedNames.size();
     }
 
     @Override
     public void addVisited(String s) {
-        visitedLinks.add(s);
+        visitedNames.add(s);
     }
 
     @Override
     public boolean visited(String link) {
-        return visitedLinks.contains(link);
+        return visitedNames.contains(link);
     }
 }
