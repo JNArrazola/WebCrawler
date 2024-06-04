@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 // TODO: usar URL en vez de String para manejar los links
-import java.net.URL;
+// import java.net.URL;
 
 public class WebCrawler implements LinkHandler {
     private final Collection<String> visitedMovies = Collections.synchronizedSet(new HashSet<String>()); // Lista de peliculas visitadas (por id)

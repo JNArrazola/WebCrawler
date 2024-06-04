@@ -1,6 +1,5 @@
 package com.web;
 
-import java.util.List;
 /**
  * This class will store the following things:
  * ID
@@ -14,7 +13,7 @@ public class Movie {
     private String title;
     private String rating;
     private String synopsis;
-    private List<Actor> actors;
+    private StringBuilder actors;
 
     /**
      * Constructor of the movie class
@@ -24,7 +23,7 @@ public class Movie {
      * @param synopsis
      * @param actors
      */
-    public Movie(String id, String title, String rating, String synopsis, List<Actor> actors) {
+    public Movie(String id, String title, String rating, String synopsis, StringBuilder actors) {
         this.id = id;
         this.title = title;
         this.rating = rating;
@@ -51,7 +50,7 @@ public class Movie {
         return synopsis;
     }
 
-    public List<Actor> getActors() {
+    public StringBuilder getActors() {
         return actors;
     }
 
@@ -74,7 +73,7 @@ public class Movie {
         this.synopsis = synopsis;
     }
 
-    public void setActors(List<Actor> actors) {
+    public void setActors(StringBuilder actors) {
         this.actors = actors;
     }
 
@@ -83,12 +82,12 @@ public class Movie {
      */
     @Override
     public String toString() {
-        return "Movie{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", rating='" + rating + '\'' +
-                ", synopsis='" + synopsis + '\'' +
-                ", actors=" + actors +
+        return "Movie{" + "\n\t" +
+                "id: '" + id + '\'' + "\n\t" +
+                "title: '" + title + '\'' + "\n\t" +
+                "rating: '" + rating + '\'' + "\n\t" +
+                "synopsis: '" + synopsis + '\'' + "\n\t" +
+                "actors: " + actors + "\n" +
                 '}';
     }
 }
