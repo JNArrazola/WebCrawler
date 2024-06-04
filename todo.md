@@ -1,1 +1,2 @@
-- [ ] Revisar si un hashset de actores aceleraría la búsqueda
+- [X] Revisar si un hashset de actores aceleraría la búsqueda
+- [ ] Revisar si sería mejor cambiar los URL a objetos URL

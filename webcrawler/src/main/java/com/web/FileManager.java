@@ -2,11 +2,24 @@ package com.web;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
 
 /**
  * Class that will manage IO operations with a csv file
  */
 public class FileManager {
+    private static final String MOVIE_FILE = new File("").getAbsolutePath() + "/webcrawler/src/main/resources/movies.csv";
+    private static final String ACTOR_FILE = new File("").getAbsolutePath() + "/webcrawler/src/main/resources/actors.csv";
+    
+    // *Getters
+    public static String getMovieFile() {
+        return MOVIE_FILE;
+    }
+
+    public static String getActorFile() {
+        return ACTOR_FILE;
+    }
+    // *End of Getters
 
     /**
      * Writes an object in a csv file

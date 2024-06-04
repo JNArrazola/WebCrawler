@@ -4,18 +4,12 @@ import com.web.LinkHandler;
 import com.web.Movie;
 import com.web.Actor;
 import com.web.FileManager;
-
 import java.util.ArrayList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-// TODO: Agregar el identificador en vez del nombre para evitar nombres reptidos
-    // ex: https://www.imdb.com//title/tt15791034/?ref_=nm_knf_t_4
-    // id: tt15791034
-
-// TODO: manejar las cosas con ID en vez de nombre
 public class LinkFinder implements Runnable {
     // webpage domain
     private static final String BASE_URL = "https://www.imdb.com/"; 
@@ -102,7 +96,7 @@ public class LinkFinder implements Runnable {
             linkHandler.addVisitedMovie(idMovie); // add the movie id to the visited movies list
             
             Movie movie = new Movie(idMovie, title, rating, synopsis, actorNames);
-            FileManager.writeInCsv(movie, "/home/jarrazola/Documents/web_crawler/webcrawler/src/main/resources/movies.csv");
+            FileManager.writeInCsv(movie, FileManager.getMovieFile());
             System.out.println(movie.toString());
 
             // take the movies of each actor
@@ -141,13 +135,12 @@ public class LinkFinder implements Runnable {
             for (Element movieElement : movieElements) {
                 Thread.sleep(4000); // ip blocking prevention
                 String movieHref = movieElement.attr("href");
-                String idMovie = movieHref.split("/")[2];
+                String idMovie = movieHref.split("/")[2]; //* take the id of the movie
 
                 String movieUrl = BASE_URL + movieHref;
 
                 Actor actor = new Actor(actorId, idMovie, name);
-                FileManager.writeInCsv(actor, "/home/jarrazola/Documents/web_crawler/webcrawler/src/main/resources/actors.csv");
-
+                FileManager.writeInCsv(actor, FileManager.getActorFile());
                 linkHandler.queue(movieUrl);
             }
         } catch (Exception e) {
