@@ -2,35 +2,39 @@ package com.web;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-
 
 /**
  * Class that will manage IO operations with a csv file
  */
-// There's gonna be only one csv (peliculas.csv)
 public class FileManager {
-    private String fileName;
 
     /**
-     * Constructor of the FileManager class
-     * @param fileName
-     */
-    public FileManager(String fileName) {
-        this.fileName = fileName;
-    }
-
-    /**
-     * Saves the list of movies in a .csv file
-     * @param movies
-     */
-    public void saveMovies(List<Movie> movies) {
-        try {
-            FileWriter writer = new FileWriter(fileName);
-            for (Movie movie : movies) {
-                writer.write('\"' + movie.getId() + '\"' + ",\"" + movie.getTitle() + ",\"" + movie.getRating() + ", \"" + movie.getSynopsis() + "\"\n");
+     * Writes an object in a csv file
+     * @param object
+     * @param file
+      */
+    public static void writeInCsv(Object object, String file){
+        try (FileWriter csvWriter = new FileWriter(file, true)){
+            if (object instanceof Movie) {
+                Movie movie = (Movie) object;
+                csvWriter.append("\""+movie.getId()+"\"");
+                csvWriter.append(",");
+                csvWriter.append("\""+movie.getTitle()+"\"");
+                csvWriter.append(",");
+                csvWriter.append("\""+movie.getRating()+"\"");
+                csvWriter.append(",");
+                csvWriter.append("\""+movie.getSynopsis()+"\"");
+                csvWriter.append("\n");
+            } else if (object instanceof Actor) {
+                Actor actor = (Actor) object;
+                csvWriter.append("\""+actor.getActorId()+"\"");
+                csvWriter.append(",");
+                csvWriter.append("\""+actor.getMovieId()+"\"");
+                csvWriter.append(",");
+                csvWriter.append("\""+actor.getName()+"\"");
+                csvWriter.append("\n");
             }
-            writer.close();
+            csvWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

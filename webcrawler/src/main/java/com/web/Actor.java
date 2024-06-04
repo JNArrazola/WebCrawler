@@ -1,58 +1,50 @@
 package com.web;
 
-import java.util.List;
-
-/**
- * Actor: 
- * ID
- * name, 
- * movies (Array of Movie objects)
- */
 public class Actor {
-    private String id;
+    private String actorId;
+    private String movieId;
     private String name;
-    private List<Movie> movies;
 
     /**
-     * Constructor of the actor class
-     * @param id
+     * Constructor of the Actor class
+     * @param actorId
+     * @param movieId
      * @param name
-     * @param movies
-     */
-    public Actor(String id, String name, List<Movie> movies) {
-        this.id = id;
+      */
+    public Actor(String actorId, String movieId, String name) {
+        this.actorId = actorId;
+        this.movieId = movieId;
         this.name = name;
-        this.movies = movies;
     }
 
     /**
      * Getters
      */
-    public String getId() {
-        return id;
+    public String getActorId() {
+        return actorId;
+    }
+
+    public String getMovieId() {
+        return movieId;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Movie> getMovies() {
-        return movies;
-    }
-
     /**
      * Setters
      */
-    public void setId(String id) {
-        this.id = id;
+    public void setActorId(String actorId) {
+        this.actorId = actorId;
+    }
+
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
     }
 
     /**
@@ -60,10 +52,10 @@ public class Actor {
      */
     @Override
     public String toString() {
-        return "Actor{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", movies=" + movies +
+        return "Actor{" + "\n\t" + 
+                "actorId: '" + actorId + '\'' + "\n\t" +  
+                "movieId: '" + movieId + '\'' + "\n\t" +
+                "name: " + name + "\n" +
                 '}';
     }
 }

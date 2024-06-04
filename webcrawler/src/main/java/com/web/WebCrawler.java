@@ -10,8 +10,8 @@ import java.util.concurrent.Executors;
 // import java.net.URL;
 
 public class WebCrawler implements LinkHandler {
-    private final Collection<String> visitedMovies = Collections.synchronizedSet(new HashSet<String>()); // Lista de peliculas visitadas (por id)
-    private final Collection<String> visitedActors = Collections.synchronizedSet(new HashSet<String>()); // Lista de actores visitados (por id)
+    private final Collection<String> visitedMovies = Collections.synchronizedSet(new HashSet<String>()); // Set of visited movies (by id)
+    private final Collection<String> visitedActors = Collections.synchronizedSet(new HashSet<String>()); // Set of visited actors (by id)
     
     private String url; // Initial link to start crawling
     private ExecutorService executorService; // Executor service to manage threads
@@ -57,13 +57,13 @@ public class WebCrawler implements LinkHandler {
      * Adds to the visited movies list
      */
     @Override
-    public void addVisitedMovie(String idMovie) {
-        visitedActors.add(idMovie);
+    public void addVisitedMovie(String movieId) {
+        visitedMovies.add(movieId);
     }
 
     @Override
-    public void addVisitedActor(String idActor) {
-        visitedActors.add(idActor);
+    public void addVisitedActor(String actorId) {
+        visitedActors.add(actorId);
     }
 
     /**
@@ -72,12 +72,12 @@ public class WebCrawler implements LinkHandler {
      * False: Has NOT been visited
      */
     @Override
-    public boolean visitedMovie(String idPelicula) {
-        return visitedActors.contains(idPelicula);
+    public boolean visitedMovie(String movieId) {
+        return visitedMovies.contains(movieId);
     }
 
     @Override
-    public boolean visitedActor(String idActor) {
-        return visitedActors.contains(idActor);
+    public boolean visitedActor(String actorId) {
+        return visitedActors.contains(actorId);
     }
 }
